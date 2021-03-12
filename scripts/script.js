@@ -1,30 +1,48 @@
-// работа с табами
+// работа с табами когда елемент один (h2) а его значение меняют подставляя варианты из массива данных
 
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
   const tabs = () => {
     const cardDetailChangeElems = document.querySelectorAll('.card-detail__change');
-    const cardDetailsTitleElems = document.querySelectorAll('.card-details__title');
-    const cardImageElems = document.querySelectorAll('.card__image');
 
-    const hideAll = () => {
-      // убираем класс актив
-      for (let i = 0; i < cardDetailChangeElems.length; i++) {
-        cardDetailChangeElems[i].classList.remove('active');
-        cardDetailsTitleElems[i].classList.remove('active');
-        cardImageElems[i].classList.remove('active');
-      }
-    }
-     // console.log(cardDetailChangeElems);
-    // добавляем класс актив
-    for (let i = 0; i < cardDetailChangeElems.length; i++) {
-      cardDetailChangeElems[i].addEventListener('click', () => {
-        hideAll();
-        cardDetailChangeElems[i].classList.add('active');
-        cardDetailsTitleElems[i].classList.add('active');
-        cardImageElems[i].classList.add('active');
-      })
-    }
+    const cardDetailsTitleElem = document.querySelector('.card-details__title');
+    const cardImageItemElem = document.querySelector('.card__image_item');
+
+    // массив данных
+    const data = [
+      {
+        name: 'Смартфон Apple iPhone 12 Pro 128GB Graphite',
+        img: 'img/iPhone-graphite.png',
+      },
+      {
+        name: 'Смартфон Apple iPhone 12 Pro 128GB Silver',
+        img: 'img/iPhone-silver.png',
+      },
+      {
+        name: 'Смартфон Apple iPhone 12 Pro 128GB Pacific Blue',
+        img: 'img/iPhone-blue.png',
+      },
+    ];
+
+    // убрать класс active с элементов
+    const deactiv = () => {
+      cardDetailChangeElems.forEach(btn => btn.classList.remove('active'))
+    };
+
+    // перебрить циклом элементы меняя класс active и добавляя данные с массива
+    cardDetailChangeElems.forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        if (!btn.classList.contains('active')) {
+          deactiv();
+          btn.classList.add('active');
+
+          cardDetailsTitleElem.textContent = data[i].name;
+          cardImageItemElem.src = data[i].img;
+          cardImageItemElem.alt = data[i].name;
+        }
+      });
+    })
+
   };
   tabs();
 });
