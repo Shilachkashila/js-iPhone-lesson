@@ -44,29 +44,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-//toggle jQuery метод .toggle() позволяет отобразить или скрыть выбранные элементы.
-// Если элемент изначально отображается, то он будет скрыт, если элемент скрыт,
-//то он будет отображен.
-
-//Значение CSS свойства display элемента сохраняются и восстанавливаются при необходимости.
-// Например, если элемент имеет значение этого свойства inline, то при отображении элемента,
-//после того как он был скрыт, значение свойства не изменится и будет по прежнему inline.
-
-//Когда метод .toggle() используется без параметров, то элемент скрывается, или отображается
-//без анимации. Когда метод используется с параметрами, то происходит анимация свойств
-// width (ширина), height (высота) и opacitycss3 (прозрачность) у выбранных элементов.
-// В момент достижения этих свойств нулевых значение (анимация исчезновения), CSS свойство display
-//устанавливается в none. Метод .slideToggle() в отличии от .toggle() производит анимацию только высоты элемента.
+//
 
   const accordion = () => {
-    const characteristicsTitle = document.querySelectorAll('.characteristics__title');
-    const characteristicsDescription = document.querySelectorAll('.characteristics__description');
+    const characteristicsListElem = document.querySelector('.characteristics__list');
+    const characteristicsItemElem = document.querySelectorAll('.characteristics__item');
 
-    characteristicsTitle.forEach((elem, i) => {
-      elem.addEventListener('click', () => {
-        elem.classList.toggle('active');
-        characteristicsDescription[i].classList.toggle('active');
-      })
+    const open = (button, dropDown) => {
+      dropDown.style.height = `${dropDown.scrollHeight}px`;
+      button.classList.add('active');
+      dropDown.classList.add('active');
+    };
+
+    const close = (button, dropDown) => {
+      button.classList.remove('active');
+      dropDown.classList.remove('active');
+      dropDown.style.height = '';
+    };
+
+//делегирование: навешиваем событие клика на весь элемент ul, target указывает конкретные
+//зоны елемента на которые можно кликать, if выбирает при клике на какие именно зоны будет срабатывать
+//код написаный мной для события click
+
+// метод closest Метод Element.closest() возвращает ближайший родительский элемент
+// (или сам элемент), который соответствует заданному CSS-селектору или null
+    characteristicsListElem.addEventListener('click', (event) => {
+      const target = event.target;
+
+      if (target.classList.contains('characteristics__title')) {
+        const parent = target.closest('.characteristics__item');
+        console.log(parent);
+      };
     })
   };
 
